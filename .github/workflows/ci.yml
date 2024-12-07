@@ -16,7 +16,7 @@ jobs:
         shell: bash
     steps:
       - name: install gettext
-        run: apt-get install -y gettext
+        run: sudo apt-get install -y gettext
 
       - name: checkout code
         uses: actions/checkout@v2
