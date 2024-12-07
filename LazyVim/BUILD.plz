@@ -1,0 +1,34 @@
+package(
+  default_visibility = ["PUBLIC"],
+)
+
+filegroup(
+  name = "plugins",
+  srcs = {
+    "zls": "./plugins/lsp/zls.lua",
+  },
+  binary = False,
+)
+
+genrule(
+  name = "build",
+  binary = False,
+  # srcs = [
+  #   ":plugins",
+  # ],
+  srcs = {
+    "plugins": [":plugins"],
+  },
+  outs = {
+    "config": [".config/nvim"],
+  },
+  cmd = [
+    "mkdir -p $OUTS_CONFIG",
+    "git clone https://github.com/LazyVim/starter $OUTS_CONFIG",
+    "mv $OUTS_CONFIG/lua/plugins/example.lua $OUTS_CONFIG/lua/plugins/core.lua",
+    "cp $SRCS_PLUGINS $OUTS_CONFIG/lua/plugins/",
+  ],
+  deps = [
+    "//nvim:build",
+  ],
+)

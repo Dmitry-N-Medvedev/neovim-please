@@ -1,0 +1,17 @@
+package(
+  default_visibility = ["PUBLIC"],
+)
+
+genrule(
+  name = "build",
+  binary = False,
+  outs = {
+    "source": ["source"],
+  },
+  cmd = [
+    "git clone --depth=1 https://github.com/ziglang/zig.vim $OUTS_SOURCE",
+  ],
+  deps = [
+    "//LazyVim:build",
+  ],
+)

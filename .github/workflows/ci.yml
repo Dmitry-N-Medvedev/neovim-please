@@ -1,0 +1,47 @@
+name: CI
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  ci:
+    env:
+      PNPM_STORE_PATH: .pnpm-store
+    runs-on: ubuntu-24.04
+    defaults:
+      run: 
+        shell: bash
+    steps:
+      - name: checkout code
+        uses: actions/checkout@v2
+      
+      - name: restore all caches
+        id: restore-all-caches
+        uses: actions/cache/restore@v4
+        with:
+          path: |
+            /home/runner/.cache/please
+            plz-out
+          key: restore-all-caches-key
+
+      - name: setup Please
+        uses: sagikazarmark/setup-please-action@v0
+        with:
+          output: all
+          verbosity: debug
+          save-logs: true
+      
+      - name: build 
+        run: plz build .//...
+      
+      - name: save all caches
+        id: save-all-caches
+        uses: actions/cache/save@v4
+        with:
+          path: |
+            /home/runner/.cache/please
+            plz-out
+          key: ${{ steps.restore-all-caches.outputs.cache-primary-key }}

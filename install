@@ -1,0 +1,20 @@
+#!/usr/bin/env sh
+
+set -e -o pipefail
+
+HOME_NEOVIM_BIN=$HOME/neovim
+HOME_NEOVIM_CONFIG=$HOME/.config/nvim
+HOME_NEOVIM_LOCAL=$HOME/.local/share/nvim
+HOME_NEOVIM_STATE=$HOME/.local/state/nvim
+HOME_NEOVIM_CACHE=$HOME/.cache/nvim
+
+plz build .//...
+
+rm -rf $HOME_NEOVIM_BIN
+rm -rf $HOME_NEOVIM_CONFIG
+rm -rf $HOME_NEOVIM_LOCAL
+rm -rf $HOME_NEOVIM_STATE
+rm -rf $HOME_NEOVIM_CACHE
+
+cp -r ./plz-out/bin/nvim/release/ $HOME_NEOVIM_BIN
+cp -r ./plz-out/gen/LazyVim/.config/nvim $HOME_NEOVIM_CONFIG

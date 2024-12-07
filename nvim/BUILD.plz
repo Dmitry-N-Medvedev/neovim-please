@@ -1,0 +1,17 @@
+package(
+  default_visibility = ["PUBLIC"],
+)
+
+genrule(
+  name = "build",
+  binary = True,
+  outs = {
+    "release": ["release"],
+  },
+  cmd = [
+    "mkdir -p $OUTS_RELEASE",
+    "git clone --depth=1 https://github.com/neovim/neovim.git",
+    f"make USE_BUNDLED=ON CMAKE_BUILD_TYPE={CONFIG.CMAKE_BUILD_TYPE} -C ./neovim",
+    "make CMAKE_INSTALL_PREFIX=../$OUTS_RELEASE -C ./neovim install",
+  ],
+)
