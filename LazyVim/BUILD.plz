@@ -6,6 +6,7 @@ filegroup(
   name = "plugins",
   srcs = {
     "zls": "./plugins/lsp/zls.lua",
+    "colorscheme_nord": "./plugins/colorscheme/nord.colorscheme.lua",
   },
   binary = False,
 )
@@ -13,9 +14,6 @@ filegroup(
 genrule(
   name = "build",
   binary = False,
-  # srcs = [
-  #   ":plugins",
-  # ],
   srcs = {
     "plugins": [":plugins"],
   },
