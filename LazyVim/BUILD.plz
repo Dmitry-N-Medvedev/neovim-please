@@ -6,7 +6,7 @@ filegroup(
   name = "plugins",
   srcs = {
     "zls": "./plugins/lsp/zls.lua",
-    "colorscheme_nord": "./plugins/colorscheme/nord.colorscheme.lua",
+    "colorscheme": "./plugins/colorscheme/colorscheme.lua",
   },
   binary = False,
 )
