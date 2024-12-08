@@ -1,0 +1,31 @@
+theme "nord"
+
+layout {
+  pane split_direction="vertical" {
+    pane {
+      name "code"
+      command "nvim"
+      args "."
+      focus true
+      size "80%"
+    }
+    pane {
+      split_direction "horizontal"
+      size "20%"
+
+      pane {
+        name "plz build .//..."
+        size "50%"
+      }
+      pane {
+        name "plz test .//..."
+        size "50%"
+      }
+    }
+  }
+  // pane {
+  //   size 4 
+  //   // borderless true
+  //   plugin location="zellij:compact-bar"
+  // }
+}
