@@ -1,32 +1,43 @@
 package(
-  default_visibility = ["PUBLIC"],
+    default_visibility = ["PUBLIC"],
 )
 
 filegroup(
-  name = "plugins",
-  srcs = {
-    "zls": "./plugins/lsp/zls.lua",
-    "colorscheme": "./plugins/colorscheme/colorscheme.lua",
-  },
-  binary = False,
+    name = "plugins",
+    srcs = {
+        "zls": "./plugins/lsp/zls.lua",
+        "please": "./plugins/lsp/please.lua",
+        "colorscheme": "./plugins/colorscheme/colorscheme.lua",
+    },
+    binary = False,
+)
+
+filegroup(
+    name = "configs",
+    srcs = {
+        "autocmds": "./config/autocmds.lua",
+    },
+    binary = False,
 )
 
 genrule(
-  name = "build",
-  binary = False,
-  srcs = {
-    "plugins": [":plugins"],
-  },
-  outs = {
-    "config": [".config/nvim"],
-  },
-  cmd = [
-    "mkdir -p $OUTS_CONFIG",
-    "git clone https://github.com/LazyVim/starter $OUTS_CONFIG",
-    "mv $OUTS_CONFIG/lua/plugins/example.lua $OUTS_CONFIG/lua/plugins/core.lua",
-    "cp $SRCS_PLUGINS $OUTS_CONFIG/lua/plugins/",
-  ],
-  deps = [
-    "//nvim:build",
-  ],
+    name = "build",
+    srcs = {
+        "plugins": [":plugins"],
+        "configs": [":configs"],
+    },
+    outs = {
+        "config": [".config/nvim"],
+    },
+    binary = False,
+    cmd = [
+        "mkdir -p $OUTS_CONFIG",
+        "git clone https://github.com/LazyVim/starter $OUTS_CONFIG",
+        "mv $OUTS_CONFIG/lua/plugins/example.lua $OUTS_CONFIG/lua/plugins/core.lua",
+        "cp $SRCS_PLUGINS $OUTS_CONFIG/lua/plugins/",
+        "cp $SRCS_CONFIGS $OUTS_CONFIG/lua/config/",
+    ],
+    deps = [
+        "//nvim:build",
+    ],
 )
