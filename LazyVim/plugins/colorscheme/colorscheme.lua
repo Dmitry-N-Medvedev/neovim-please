@@ -1,10 +1,14 @@
 return {
-  { "rebelot/kanagawa.nvim" },
+	{
+		"shaunsingh/nord.nvim",
+		config = function()
+			vim.g.nord_disable_background = true
+			require("nord").set()
 
-  {
-    "LazyVim/LazyVim",
-    opts = {
-      colorscheme = "kanagawa-dragon",
-    },
-  },
+			local colors = require("nord.colors")
+			require("nord.util").highlight("@type.qualifier.cpp", { fg = colors.nord6_gui, style = "italic" })
+			require("nord.util").highlight("@lsp.typemod.variable.readonly.cpp", { style = "undercurl" })
+			require("nord.util").highlight("LspInlayHint", { fg = colors.nord3_gui_bright, style = "italic" })
+		end,
+	},
 }
